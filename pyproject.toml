@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cmdmate"
+version = "0.1.0"
+description = "cmdmate : Your AI powered terminal assistant 🚀"
+readme = "README.md"
+requires-python = ">=3.8"
+license = { text = "MIT" }
+authors = [
+  { name = "Chinmay Rao" }
+]
+dependencies = [
+  "requests>=2.32.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/mmchinmay555/cmdmate"
+Repository = "https://github.com/mmchinmay555/"
+
+[project.scripts]
+cmdmate = "client.cmdmate_cli:main"

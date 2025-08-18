@@ -17,7 +17,7 @@ def main():
     parser.add_argument("query", type=str, help="The command or task you want to perform")
     parser.add_argument("-o", "--os", type=str, help="Target OS (auto-detected if not provided)")
     # parser.add_argument("--server", type=str, default="http://127.0.0.1:8000/", help="Server URL")
-    parser.add_argument("--server", type=str, default="https://cmdmate-online.onrender.com/", help="Server URL")
+    parser.add_argument("--server", type=str, default="https://cmdmate.onrender.com/", help="Server URL")
     args = parser.parse_args()
 
      # --- OS aliases ---
