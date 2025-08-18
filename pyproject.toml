@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=61.0"]
+requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -18,7 +18,11 @@ dependencies = [
 
 [project.urls]
 Homepage = "https://github.com/mmchinmay555/cmdmate"
-Repository = "https://github.com/mmchinmay555/"
+Repository = "https://github.com/mmchinmay555/cmdmate"
 
 [project.scripts]
 cmdmate = "client.cmdmate_cli:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["client", "client.*"]
