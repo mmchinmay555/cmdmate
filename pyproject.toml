@@ -26,3 +26,7 @@ cmdmate = "client.cmdmate_cli:main"
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["client", "client.*"]
+exclude = ["server", "server.*", "tests", "tests.*"]
+
+[tool.setuptools.exclude-package-data]
+"*" = ["server/*", "tests/*", "*.pyc", "__pycache__"]
