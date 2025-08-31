@@ -27,7 +27,7 @@ def echo(data: InputText):
     return {"response": f"#{data.text}"}
 
 @app.post("/getCmd")
-def cmdMate(data: InputText):
+def getCmd(data: InputText):
     try:
         # Pass both query and OS from client
         command = cmdMate_ai.query_command(data.text, data.os)
