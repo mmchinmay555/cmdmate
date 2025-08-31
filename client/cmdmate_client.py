@@ -27,10 +27,22 @@ class cmdmateClient:
             os_name = self.detect_os()
 
         payload = {"text": query, "os": os_name}
+        
         try:
             response = requests.post(f"{self.server_url}/getCmd", json=payload)
             response.raise_for_status()
             data = response.json()
             return data.get("command", "")
+        except requests.exceptions.RequestException as e:
+            raise RuntimeError(f"Request failed: {e}") from e
+        
+    def get_explanation(self, query: str) -> str:
+        payload = {"text": query}
+
+        try:
+            response = requests.post(f"{self.server_url}/getExplaination", json=payload)
+            response.raise_for_status()
+            data = response.json()
+            return data.get("explanation", "")
         except requests.exceptions.RequestException as e:
             raise RuntimeError(f"Request failed: {e}") from e

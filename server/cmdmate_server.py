@@ -15,6 +15,9 @@ class InputText(BaseModel):
     text: str  # The user's query
     os: str    # The operating system (linux/mac/windows)
 
+class ExplainInput(BaseModel):
+    text: str  # The user's query for explanation
+
 # -----------------------------
 # Routes
 # -----------------------------
@@ -34,3 +37,12 @@ def getCmd(data: InputText):
         return {"command": command}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+    
+@app.post("/getExplaination")
+def getExplaination(data: ExplainInput):
+    try:
+        explanation = cmdMate_ai.query_explain(data.text)
+        return {"explanation": explanation}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+    

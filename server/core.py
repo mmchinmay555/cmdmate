@@ -31,6 +31,27 @@ class CmdMate:
             command = "\n".join(command.splitlines()[1:-1])
         return command
     
+    def query_explain(self,query: str) -> str:
+        prompt = f"Explain the following : {query}"
+        response = self.client.chat.completions.create(
+            model="gpt-4o",
+            messages=[
+                {
+                    "role": "system",
+                    "content": (
+                        "You are CmdMate, a helpful assistant. "
+                        "Provide clear and concise explanations for user questions. "
+                        "Keep responses brief and simple and easy to understand."
+                    )
+                },
+                {"role": "user", "content": prompt}
+            ],
+            max_tokens=100,
+            temperature=0
+        )
+        explanation = response.choices[0].message.content.strip()
+        return explanation
+    
 # Future features
     # def query_explain
     # def query_commit_help
