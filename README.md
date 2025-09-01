@@ -1,107 +1,137 @@
-# cmdmate 
+# cmdmate 🚀
 
-[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
-[![OpenAI GPT-4](https://img.shields.io/badge/AI-GPT--4-green.svg)](https://openai.com/)
-[![Cross Platform](https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-lightgrey.svg)]()
+Your AI-powered terminal assistant that helps you find the right commands, explanations, and even generates git commit messages!
 
-cmdmate is an AI-powered command-line assistant that converts natural language queries into terminal commands. Simply describe what you want to do, and cmdmate will generate the appropriate command for your operating system.
+## Features
 
-## ✨ Features
+- **Command Generation**: Get the right terminal commands for any task
+- **Explanation Mode**: Ask questions and get detailed explanations
+- **Git Commit Helper**: Generate meaningful commit messages from your git diff
+- **Cross-platform**: Supports Windows, Linux, and macOS
+- **Auto OS Detection**: Automatically detects your operating system
 
-- 🧠 **AI-Powered**: Uses OpenAI's GPT-4 to understand natural language queries
-- 🖥️ **Cross-Platform**: Works on Windows, macOS, and Linux
-- 🔒 **Safe Execution**: Always asks for confirmation before running commands
-- 🎯 **OS-Aware**: Generates commands specific to your operating system
-- ⚡ **Simple CLI**: Easy-to-use command-line interface
-
-## 🚀 Installation
-
-**Clone the repository:**
-   ```bash
-   pip install cmdmate
-   ```
-
-## 📖 Usage
-
-### Quick Start
-
-Run cmdmate directly from the project directory:
+## Installation
 
 ```bash
-cmdmate "<your natural language command>"
+pip install cmdmate
 ```
 
-**Example:**
+## Usage
+
+### Basic Command Generation
+
+Generate terminal commands for any task:
+
 ```bash
 cmdmate "list all files in current directory"
-cmdmate -o win "list all files in current directory"
+cmdmate "find all python files"
+cmdmate "compress folder into zip"
 ```
 
-### Example Commands
+### Explanation Mode (`--explain` or `-e`)
 
-#### File Operations
+Get explanations for anything:
+
 ```bash
-cmdmate "find all Python files in this directory"
-cmdmate "create a new directory called my-project"
-cmdmate "copy all .txt files to a backup folder"
-cmdmate "delete all .log files older than 7 days"
+cmdmate -e "what is docker"
+cmdmate --explain "how does git rebase work"
+cmdmate -e "difference between chmod 755 and 644"
 ```
 
-#### System Information
+### Git Commit Message Generation (`--commitHelp`)
+
+Generate meaningful commit messages from your git diff:
+
 ```bash
-cmdmate "show disk usage for this directory"
-cmdmate "display all running processes"
-cmdmate "check available memory"
-cmdmate "show network connections"
+git diff | cmdmate --commitHelp
+git diff --staged | cmdmate --commitHelp
 ```
 
-#### Git Operations
+Example output:
+```
+feat: add user authentication with JWT tokens
+
+- Implement login/logout endpoints
+- Add JWT token validation middleware
+- Create user session management
+```
+
+### Specify Target OS (`--os` or `-o`)
+
+Force commands for a specific operating system:
+
 ```bash
-cmdmate "stage all changes and commit with message 'fix bugs'"
-cmdmate "create and switch to a new branch called feature-login"
-cmdmate "show git log for the last 5 commits"
-cmdmate "push current branch to origin"
+cmdmate "list files" --os windows
+cmdmate "list files" --os linux
+cmdmate "list files" -o mac
 ```
 
-### Example Session
+Supported OS aliases:
+- `windows`, `win`
+- `linux`, `lin`
+- `mac`, `darwin`
 
-```
-$ cmdmate "show me all hidden files in this directory"
+### Custom Server (`--server`)
 
-🤖 [cmdmate] Generated Command:
-ls -la
-```
+Use a custom server endpoint:
 
-### Tips for Better Results
-
-- **Be specific**: "list Python files" vs "show files"
-- **Include context**: "in current directory" or "recursively"
-- **Mention your intent**: "for backup", "to delete", "to analyze"
-- **Use natural language**: cmdmate understands conversational commands
+```bash
+cmdmate "your query" --server http://localhost:8000/
 ```
 
-### Supported Operating Systems
+## Examples
 
-- **macOS**: Uses `/bin/zsh` as the default shell
-- **Linux**: Uses `/bin/zsh` as the default shell  
-- **Windows**: Uses `cmd.exe` as the default shell
+### Command Generation
+```bash
+$ cmdmate "find all files larger than 100MB"
+find . -type f -size +100M
 
-## 🛡️ Safety Features
+$ cmdmate "kill process on port 3000"
+lsof -ti:3000 | xargs kill -9
+```
 
-- **Confirmation Prompt**: Always asks before executing commands
-- **Error Handling**: Gracefully handles execution errors
-- **No Auto-Execution**: Commands are never run without user consent
+### Explanations
+```bash
+$ cmdmate -e "what does chmod 755 mean"
+chmod 755 sets file permissions where:
+- 7 (owner): read(4) + write(2) + execute(1) = full permissions
+- 5 (group): read(4) + execute(1) = read and execute only
+- 5 (others): read(4) + execute(1) = read and execute only
+```
 
-## 📋 Requirements
+### Git Commit Messages
+```bash
+$ git diff | cmdmate --commitHelp
+fix: resolve authentication timeout issue
 
-- Python 3.8 or higher
-- Internet connection for AI queries
+- Increase JWT token expiration to 24 hours
+- Add retry logic for failed auth requests
+- Update error handling for expired tokens
+```
 
-## 📝 License
+## Command Line Options
+
+| Option | Short | Description |
+|--------|-------|-------------|
+| `query` | - | The command or task you want to perform |
+| `--os` | `-o` | Target OS (auto-detected if not provided) |
+| `--explain` | `-e` | Ask anything, get explanation |
+| `--commitHelp` | - | Generate git commit message from diff input |
+| `--server` | - | Server URL (default: https://cmdmate.onrender.com/) |
+
+## Version
+
+Current version: v0.1.4
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## ⚠️ Disclaimer
+## Disclaimer
 
 cmdmate generates commands using AI, which may not always be perfect. Always review commands before execution, especially for:
 - File deletion operations
