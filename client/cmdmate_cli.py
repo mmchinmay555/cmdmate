@@ -18,8 +18,8 @@ def main():
     parser.add_argument("-o", "--os", type=str, help="Target OS (auto-detected if not provided)")
     parser.add_argument("-e", "--explain", action="store_true", help="Ask anything, get explanation")
     parser.add_argument("--commitHelp", action="store_true", help="Generate git commit message from diff input")
-    parser.add_argument("--server", type=str, default="http://127.0.0.1:8000/", help="Server URL")
-    # parser.add_argument("--server", type=str, default="https://cmdmate.onrender.com/", help="Server URL")
+    # parser.add_argument("--server", type=str, default="http://127.0.0.1:8000/", help="Server URL")
+    parser.add_argument("--server", type=str, default="https://cmdmate.onrender.com/", help="Server URL")
     args = parser.parse_args()
 
     # --- OS aliases ---
