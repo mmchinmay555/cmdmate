@@ -46,3 +46,11 @@ def getExplaination(data: ExplainInput):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
     
+@app.post("/getCommitMsg")
+def getCommitMsg(data: ExplainInput):
+    try:
+        # Future feature placeholder
+        commit_message = cmdMate_ai.query_getCommit(data.text)
+        return {"commit_message": commit_message}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))

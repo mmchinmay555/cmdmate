@@ -46,3 +46,15 @@ class cmdmateClient:
             return data.get("explanation", "")
         except requests.exceptions.RequestException as e:
             raise RuntimeError(f"Request failed: {e}") from e
+        
+
+    def get_commitMsg(self, diff_input: str) -> str:
+        payload = {"text": diff_input}
+
+        try:
+            response = requests.post(f"{self.server_url}/getCommitMsg", json=payload)
+            response.raise_for_status()
+            data = response.json()
+            return data.get("commit_message", "")
+        except requests.exceptions.RequestException as e:
+            raise RuntimeError(f"Request failed: {e}") from e

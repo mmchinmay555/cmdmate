@@ -31,7 +31,7 @@ class CmdMate:
             command = "\n".join(command.splitlines()[1:-1])
         return command
     
-    def query_explain(self,query: str) -> str:
+    def query_explain(self, query: str) -> str:
         prompt = f"Explain the following : {query}"
         response = self.client.chat.completions.create(
             model="gpt-4o",
@@ -42,15 +42,46 @@ class CmdMate:
                         "You are CmdMate, a helpful assistant. "
                         "Provide clear and concise explanations for user questions. "
                         "Keep responses brief and simple and easy to understand."
+                        "Avoid any formatting like code blocks or markdown."
+                        "Just the plain text explanation. And keep the explaination well within 100-150 words."
                     )
                 },
                 {"role": "user", "content": prompt}
             ],
-            max_tokens=100,
+            max_tokens=200,
             temperature=0
         )
         explanation = response.choices[0].message.content.strip()
-        return explanation
+        return "\n"+explanation+"\n"
+    
+    def query_getCommit(self, git_diff: str) -> list[str]:
+        prompt = f"Git diff:\n{git_diff}"
+        response = self.client.chat.completions.create(
+            model="gpt-4o",
+            messages=[
+                {
+                    "role": "system",
+                    "content": (
+                        "You are CmdMate, a git commit message assistant. "
+                        "Given a git diff, generate exactly 3 concise one-liner commit messages in past tense (e.g., 'Added', 'Implemented', 'Fixed') "
+                        "Write them in plain text only. "
+                        "Each must start with '- ' and be on its own line. "
+                        "Do NOT wrap them in [ ], do NOT use quotes, and do NOT separate with commas. "
+                        "Correct format:\n"
+                        "- First commit message\n"
+                        "- Second commit message\n"
+                        "- Third commit message"
+                    )
+                },
+                {"role": "user", "content": prompt}
+            ],
+            max_tokens=150,
+            temperature=0.3
+        )
+        commit_messages = response.choices[0].message.content.strip().split('\n')
+        commit_messages = [msg.strip() for msg in commit_messages if msg.strip()][:3]
+
+        return "\nSample commit messages\n\n" + "\n".join(commit_messages)+"\n"
     
 # Future features
     # def query_explain
