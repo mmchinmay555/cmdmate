@@ -9,7 +9,7 @@ warnings.simplefilter("ignore", NotOpenSSLWarning)
 import argparse
 import sys
 
-from .cmdmate_client import cmdmateClient
+from .cmdmate_client import CmdmateClient
 
 
 def main():
@@ -37,7 +37,7 @@ def main():
     else:
         os_name = None  # let get_command auto-detect
 
-    client = cmdmateClient(args.server)
+    client = CmdmateClient(args.server)
 
     try:
         if args.commitHelp:

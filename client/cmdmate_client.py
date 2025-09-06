@@ -6,9 +6,11 @@ warnings.simplefilter("ignore", NotOpenSSLWarning)
 import platform
 import requests
 
-class cmdmateClient:
+from .cmdmate_apiClient import ApiClient
+
+class CmdmateClient:
     def __init__(self, server_url="https://cmdmate-online.onrender.com/"):
-        self.server_url = server_url.rstrip("/")
+        self.api = ApiClient(server_url)
 
     @staticmethod
     def detect_os() -> str:
@@ -26,35 +28,13 @@ class cmdmateClient:
         if not os_name:
             os_name = self.detect_os()
 
-        payload = {"text": query, "os": os_name}
-        
-        try:
-            response = requests.post(f"{self.server_url}/getCmd", json=payload)
-            response.raise_for_status()
-            data = response.json()
-            return data.get("command", "")
-        except requests.exceptions.RequestException as e:
-            raise RuntimeError(f"Request failed: {e}") from e
-        
-    def get_explanation(self, query: str) -> str:
-        payload = {"text": query}
+        data = self.api.post("/getCmd", {"text": query, "os": os_name})
+        return data.get("command", "")
 
-        try:
-            response = requests.post(f"{self.server_url}/getExplaination", json=payload)
-            response.raise_for_status()
-            data = response.json()
-            return data.get("explanation", "")
-        except requests.exceptions.RequestException as e:
-            raise RuntimeError(f"Request failed: {e}") from e
-        
+    def get_explanation(self, query: str) -> str:
+        data = self.api.post("/getExplaination", {"text": query})
+        return data.get("explanation", "")
 
     def get_commitMsg(self, diff_input: str) -> str:
-        payload = {"text": diff_input}
-
-        try:
-            response = requests.post(f"{self.server_url}/getCommitMsg", json=payload)
-            response.raise_for_status()
-            data = response.json()
-            return data.get("commit_message", "")
-        except requests.exceptions.RequestException as e:
-            raise RuntimeError(f"Request failed: {e}") from e
+        data = self.api.post("/getCommitMsg", {"text": diff_input})
+        return data.get("commit_message", "")
