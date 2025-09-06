@@ -33,9 +33,8 @@ cmdmate "compress folder into zip"
 Get explanations for anything:
 
 ```bash
-cmdmate -e "what is docker"
-cmdmate --explain "how does git rebase work"
-cmdmate -e "difference between chmod 755 and 644"
+cmdmate -a "what is docker"
+cmdmate --ask "how does git rebase work"
 ```
 
 ### Git Commit Message Generation (`--commitHelp`)
@@ -112,6 +111,7 @@ fix: resolve authentication timeout issue
 ### Response based on input
 ```bash
 $ cat ReadMe.md | cmdmate "summarize this file for me"
+$ git diff | cmdmate "what does the changes do?"
 ```
 
 ## Command Line Options
@@ -120,7 +120,7 @@ $ cat ReadMe.md | cmdmate "summarize this file for me"
 |--------|-------|-------------|
 | `query` | - | The command or task you want to perform |
 | `--os` | `-o` | Target OS (auto-detected if not provided) |
-| `--explain` | `-e` | Ask anything, get explanation |
+| `--ask` | `-e` | Ask anything, get explanation |
 | `--commitHelp` | - | Generate git commit message from diff input |
 | `--server` | - | Server URL (default: https://cmdmate.onrender.com/) |
 
