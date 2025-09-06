@@ -38,3 +38,7 @@ class CmdmateClient:
     def get_commitMsg(self, diff_input: str) -> str:
         data = self.api.post("/getCommitMsg", {"text": diff_input})
         return data.get("commit_message", "")
+    
+    def get_response_from_input(self, input: str, query: str) -> str:
+        data = self.api.post("/getResponseFromInput", {"input": input, "query": query})
+        return data.get("response", "")

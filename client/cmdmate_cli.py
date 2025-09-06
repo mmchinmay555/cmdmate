@@ -16,7 +16,7 @@ def main():
     parser = argparse.ArgumentParser(description="cmdmate (v0.1.5) - Your AI powered terminal assistant 🚀")
     parser.add_argument("query", type=str, nargs='?', help="The command or task you want to perform")
     parser.add_argument("-o", "--os", type=str, help="Target OS (auto-detected if not provided)")
-    parser.add_argument("-e", "--explain", action="store_true", help="Ask anything, get explanation")
+    parser.add_argument("-a", "--ask", action="store_true", help="Ask anything, get explanation")
     parser.add_argument("--commitHelp", action="store_true", help="Generate git commit message from diff input")
     # parser.add_argument("--server", type=str, default="http://127.0.0.1:8000/", help="Server URL")
     parser.add_argument("--server", type=str, default="https://cmdmate.onrender.com/", help="Server URL")
@@ -48,7 +48,7 @@ def main():
                 sys.exit(1)
             result = client.get_commitMsg(diff_input)
             print(result)
-        elif args.explain:
+        elif args.ask:
             if not args.query:
                 print("Query is required for explanation mode.", file=sys.stderr)
                 sys.exit(1)
@@ -58,7 +58,11 @@ def main():
             if not args.query:
                 print("Query is required.", file=sys.stderr)
                 sys.exit(1)
-            result = client.get_command(args.query, os_name)
+            if not sys.stdin.isatty():
+                input_data = sys.stdin.read().strip()
+                result = client.get_response_from_input(input_data, args.query)
+            else:
+                result = client.get_command(args.query, os_name)
             print(result)
 
     except RuntimeError as e:

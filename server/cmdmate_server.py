@@ -18,6 +18,10 @@ class InputText(BaseModel):
 class ExplainInput(BaseModel):
     text: str  # The user's query for explanation
 
+class RespondBasedOnInput(BaseModel):
+    input: str  # Additional input data
+    query: str  # The user's input for general response
+
 # -----------------------------
 # Routes
 # -----------------------------
@@ -52,5 +56,13 @@ def getCommitMsg(data: ExplainInput):
         # Future feature placeholder
         commit_message = cmdMate_ai.query_getCommit(data.text)
         return {"commit_message": commit_message}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/getResponseFromInput")
+def getResponseFromInput(data: RespondBasedOnInput):
+    try:
+        response = cmdMate_ai.query_response_from_input(data.input, data.query)
+        return {"response": response}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

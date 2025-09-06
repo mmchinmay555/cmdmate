@@ -83,6 +83,37 @@ class CmdMate:
 
         return "\nSample commit messages\n\n" + "\n".join(commit_messages)+"\n"
     
+    def query_response_from_input(self, input: str, query: str) -> str:
+        prompt = (
+            f"Based on the following input, respond to the user's query:\n\n"
+            f"Input:\n{input}\n\n"
+            f"Query:\n{query}"
+        )
+        response = self.client.chat.completions.create(
+            model="gpt-4o",
+            messages=[
+                {
+                    "role": "system",
+                    "content": (
+                        "You are CmdMate, a helpful assistant."
+                        "Provide clear and concise responses for user questions."
+                        "Keep responses brief, simple, and easy to understand."
+                        "Avoid formatting like code blocks, quotes, or markdown."
+                        "Also avoid this ** formatting."
+                        "Just plain text responses."
+                        "Keep the response well within 100-150 words."
+                        "Only exceed 150 words if absolutely necessary, and never go above 300 words."
+                    )
+                },
+                {"role": "user", "content": prompt}
+            ],
+            max_tokens=250,
+            temperature=0
+        )
+
+        response = response.choices[0].message.content.strip()
+        return "\n"+response+"\n"
+    
 # Future features
     # def query_explain
     # def query_commit_help
