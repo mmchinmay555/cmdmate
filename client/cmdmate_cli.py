@@ -13,7 +13,26 @@ from .cmdmate_client import CmdmateClient
 
 
 def main():
-    parser = argparse.ArgumentParser(description="cmdmate (v0.1.5) - Your AI powered terminal assistant 🚀")
+    parser = argparse.ArgumentParser(
+        description="cmdmate (v0.1.6) - Your AI powered terminal assistant 🚀",
+        epilog="""\
+    Examples:
+    # Query only (no input)
+    cmdmate "list all files"
+
+    # Query with piped input from a file
+    cat README.md | cmdmate "summarize this file"
+
+    # Query with piped input from another command
+    git diff | cmdmate "explain the changes"
+
+    Notes:
+    - You can provide a query directly as an argument.
+    - If input is piped, cmdmate automatically detects it and includes it along with your query.
+    """
+        , formatter_class=argparse.RawDescriptionHelpFormatter
+    )
+    
     parser.add_argument("query", type=str, nargs='?', help="The command or task you want to perform")
     parser.add_argument("-o", "--os", type=str, help="Target OS (auto-detected if not provided)")
     parser.add_argument("-a", "--ask", action="store_true", help="Ask anything, get explanation")
