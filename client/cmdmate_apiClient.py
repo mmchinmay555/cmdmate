@@ -71,7 +71,9 @@ class ApiClient:
                 headers={"Content-Type": "application/json"},
             )
             if resp.status >= 400:
-                raise RuntimeError(f"HTTP {resp.status}: {resp.data.decode()}")
+                body = resp.data.decode(errors="ignore")
+                snippet = body[:200].replace("\n", " ") + ("..." if len(body) > 200 else "")
+                raise RuntimeError(f"HTTP {resp.status}: {snippet}")
             return json.loads(resp.data.decode())
         except Exception as e:
             raise RuntimeError(f"Request failed: {e}") from e
