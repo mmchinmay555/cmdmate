@@ -109,6 +109,11 @@ fix: resolve authentication timeout issue
 - Update error handling for expired tokens
 ```
 
+### Response based on input
+```bash
+$ cat ReadMe.md | cmdmate "summarize this file for me"
+```
+
 ## Command Line Options
 
 | Option | Short | Description |
@@ -121,7 +126,7 @@ fix: resolve authentication timeout issue
 
 ## Version
 
-Current version: v0.1.4
+Current version: v0.1.6
 
 ## Contributing
 
