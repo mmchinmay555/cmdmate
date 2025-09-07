@@ -112,6 +112,7 @@ fix: resolve authentication timeout issue
 ```bash
 $ cat ReadMe.md | cmdmate "summarize this file for me"
 $ git diff | cmdmate "what does the changes do?"
+$ cat app.log | cmdmate "can you find any errors in the log file?"
 ```
 
 ## Command Line Options
@@ -120,13 +121,13 @@ $ git diff | cmdmate "what does the changes do?"
 |--------|-------|-------------|
 | `query` | - | The command or task you want to perform |
 | `--os` | `-o` | Target OS (auto-detected if not provided) |
-| `--ask` | `-e` | Ask anything, get explanation |
+| `--ask` | `-a` | Ask anything, get explanation |
 | `--commitHelp` | - | Generate git commit message from diff input |
 | `--server` | - | Server URL (default: https://cmdmate.onrender.com/) |
 
 ## Version
 
-Current version: v0.1.6
+Current version: v0.1.7
 
 ## Contributing
 

@@ -14,7 +14,7 @@ from .cmdmate_client import CmdmateClient
 
 def main():
     parser = argparse.ArgumentParser(
-        description="cmdmate (v0.1.6) - Your AI powered terminal assistant 🚀",
+        description="cmdmate (v0.1.7) - Your AI powered terminal assistant 🚀",
         epilog="""\
     Examples:
     # Query only (no input)
@@ -32,7 +32,7 @@ def main():
     """
         , formatter_class=argparse.RawDescriptionHelpFormatter
     )
-    
+
     parser.add_argument("query", type=str, nargs='?', help="The command or task you want to perform")
     parser.add_argument("-o", "--os", type=str, help="Target OS (auto-detected if not provided)")
     parser.add_argument("-a", "--ask", action="store_true", help="Ask anything, get explanation")
